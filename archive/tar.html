@@ -32,7 +32,7 @@
 
 
         
-    <div class="book" data-github="goManual/goManual" data-level="1.1" data-basepath=".." data-revision="1408369934849">
+    <div class="book" data-github="goManual/goManual" data-level="1.1" data-basepath=".." data-revision="1408415626882">
     <div class="book-header">
     <!-- Actions Left -->
     <a href="#" class="btn pull-left toggle-summary" aria-label="Toggle summary"><i class="fa fa-align-justify"></i></a>
@@ -270,7 +270,7 @@
   }
 </code></pre>
 <p><br><br></p>
-<p>常量</p>
+<h3 id="constants">Constants</h3>
 <pre><code class="lang-golang"><span class="hljs-keyword">const</span> (
 
     <span class="hljs-comment">// Types</span>
@@ -290,7 +290,7 @@
 )
 </code></pre>
 <p><br><br></p>
-<p>变量</p>
+<h3 id="variables">Variables</h3>
 <pre><code class="lang-golang"><span class="hljs-keyword">var</span> (
     ErrWriteTooLong    = errors.New(<span class="hljs-string">"archive/tar: write too long"</span>)
     ErrFieldTooLong    = errors.New(<span class="hljs-string">"archive/tar: header field too long"</span>)
@@ -327,13 +327,13 @@ Header表示一个tar文档的头信息。 某些字段可以不用填充.
 <pre><code class="lang-golang"><span class="hljs-keyword">func</span> FileInfoHeader(fi os.FileInfo, link <span class="hljs-typename">string</span>) (*Header, error)
 </code></pre>
 <p>FileInfoHeader creates a partially-populated Header from fi. If fi describes a symlink, FileInfoHeader records link as the link target. If fi describes a directory, a slash is appended to the name. Because os.FileInfo&#39;s Name method returns only the base name of the file it describes, it may be necessary to modify the Name field of the returned header to provide the full path name of the file.<br>
-FileInfoHeader创建部分填充的头，如果是一个链接，返回链接对象，如果是一个目录，目录名加斜杠。因为os.FileInfo的 Name方法 返回最基本的文件名，要修改头的Name字段必须使用完整的路径名称<br>
+FileInfoHeader 从fi创建部分填充的Header.如果fi是一个符号链接，FileInfoHeader 记录链接的链接目标，如果fi是一个目录，目录名加斜杠。因为os.FileInfo的 Name方法 返回它描述的文件的基本名称，要修改返回头的Name字段必须使用完整的路径名<br>
 <br><br></p>
 <h3 id="func-h-header-fileinfo">func (h *Header) FileInfo</h3>
 <pre><code class="lang-golang"><span class="hljs-keyword">func</span> (h *Header) FileInfo() os.FileInfo
 </code></pre>
 <p>FileInfo returns an os.FileInfo for the Header.<br>
-返回一个os.FileInfo
+FileInfo 返回一个os.FileInfo
 <br><br></p>
 <h3 id="type-reader">type Reader</h3>
 <pre><code class="lang-golang">  <span class="hljs-keyword">type</span> Reader <span class="hljs-keyword">struct</span> {
@@ -341,25 +341,25 @@ FileInfoHeader创建部分填充的头，如果是一个链接，返回链接对
   }
 </code></pre>
 <p>A Reader provides sequential access to the contents of a tar archive. A tar archive consists of a sequence of files. The Next method advances to the next file in the archive (including the first), and then it can be treated as an io.Reader to access the file&#39;s data.<br>
-顺序访问tar归档包的目录。一个归档包由一系列文件组成。Next方法访问归档文件中的下一个文件（包含第一个文件）然后它可以像io.Reader一样访问文件的数据
+Reader 顺序访问tar归档包的目录。一个tar归档由一系列文件组成。Next方法访问归档文件中的下一个文件（包含第一个文件）然后它可以像io.Reader一样访问文件的数据
 <br><br></p>
 <h3 id="func-newreader">func NewReader</h3>
 <pre><code class="lang-golang"><span class="hljs-keyword">func</span> NewReader(r io.Reader) *Reader
 </code></pre>
 <p>NewReader creates a new Reader reading from r.<br>
-从r中创建新的Reader对象
+NewReader从r中创建新的Reader对象
 <br><br></p>
 <h3 id="func-tr-reader-next">func (tr *Reader) Next</h3>
 <pre><code class="lang-golang"><span class="hljs-keyword">func</span> (tr *Reader) Next() (*Header, error)
 </code></pre>
 <p>Next advances to the next entry in the tar archive<br>
-归档文件中下一个条目。注：跳到tar文件的下一个条目
+Next 进入的tar归档下一个条目
 <br><br></p>
 <h3 id="func-tr-reader-read">func (tr *Reader) Read</h3>
 <pre><code class="lang-golang"><span class="hljs-keyword">func</span> (tr *Reader) Read(b []<span class="hljs-typename">byte</span>) (n <span class="hljs-typename">int</span>, err error)
 </code></pre>
 <p>Read reads from the current entry in the tar archive. It returns 0, io.EOF when it reaches the end of that entry, until Next is called to advance to the next entry.<br>
-从tar归档中读取确定的条目。直到调用Next读取到文档末尾的时候返回0.
+Read 从tar归档中读取当前的条目。 当它到该条目末尾时返回0,io.EOF ,直到调用Next前进到下一个条目.
 <br><br></p>
 <h3 id="type-writer">type Writer</h3>
 <pre><code class="lang-golang">  <span class="hljs-keyword">type</span> Writer <span class="hljs-keyword">struct</span> {
@@ -367,37 +367,37 @@ FileInfoHeader创建部分填充的头，如果是一个链接，返回链接对
   }
 </code></pre>
 <p>A Writer provides sequential writing of a tar archive in POSIX.1 format. A tar archive consists of a sequence of files. Call WriteHeader to begin a new file, and then call Write to supply that file&#39;s data, writing at most hdr.Size bytes in total.<br>
-使用POSIX1格式顺序写入归档。一个归档文件，由一系列文件组成。调用WriteHeader开始一个新文件，然后调用write写入数据，总共写入hdr.Size长度。
+Writer 提供用POSIX.1格式顺序写入归档。一个归档文件，由一系列文件组成。调用WriteHeader开始一个新文件，然后调用Write 提供该文件的数据，最多写入hdr.Size字节。
 <br><br></p>
 <h3 id="func-newwriter">func NewWriter</h3>
 <pre><code class="lang-golang"><span class="hljs-keyword">func</span> NewWriter(w io.Writer) *Writer
 </code></pre>
 <p>NewWriter creates a new Writer writing to w.<br>
-创建一个新的Writer对象w。
+NewWriter创建一个新的Writer写入w。
 <br><br></p>
 <h3 id="func-tw-writer-close">func (tw *Writer) Close</h3>
 <pre><code class="lang-golang"><span class="hljs-keyword">func</span> (tw *Writer) Close() error
 </code></pre>
 <p>Close closes the tar archive, flushing any unwritten data to the underlying writer.<br>
-关闭归档，刷新任何未写入的数据到底层writer
+Close 关闭归档，刷新任何未写入的数据到底层writer
 <br><br></p>
 <h3 id="func-tw-writer-flush">func (tw *Writer) Flush()</h3>
 <pre><code class="lang-golang"><span class="hljs-keyword">func</span> (tw *Writer) Flush() error
 </code></pre>
 <p>Flush finishes writing the current file (optional).<br>
-刷新写入的文件
+Flush 结束写入当前文件(可选).
 <br><br></p>
 <h3 id="func-tw-writer-write">func (tw *Writer) Write</h3>
 <pre><code class="lang-golang"><span class="hljs-keyword">func</span> (tw *Writer) Write(b []<span class="hljs-typename">byte</span>) (n <span class="hljs-typename">int</span>, err error)
 </code></pre>
 <p>Write writes to the current entry in the tar archive. Write returns the error ErrWriteTooLong if more than hdr.Size bytes are written after WriteHeader.<br>
-写入归档文件，当文件头大于hdr.Size，返回错误“写入文件太长”
+Write 写入在tar归档中的当前条目. 如果在WriteHeader之后写入的字节超过hdr.Size，Write返回ErrWriteTooLong 错误.
 <br><br></p>
 <h3 id="func-tw-writer-writeheader">func (tw *Writer) WriteHeader</h3>
 <pre><code class="lang-golang"><span class="hljs-keyword">func</span> (tw *Writer) WriteHeader(hdr *Header) error
 </code></pre>
 <p>WriteHeader writes hdr and prepares to accept the file&#39;s contents. WriteHeader calls Flush if it is not the first header. Calling after a Close will return ErrWriteAfterClose.<br>
-写入hdr 准备访问文件的内容，如果不是第一个头就调用Flush，在归档文件返回 ErrWriteAfterClose之后调用Close方法
+WriteHeader写hdr并准备接收文件的内容.如果不是第一个header, WriteHeader调用Flush. 在Close 之后调用该方法将返回ErrWriteAfterClose
 <br><br></p>
 
                     
